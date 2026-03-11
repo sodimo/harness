@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -t FONTS <<< "$@"
+FONTS=("$@")
 DEST="/usr/share/fonts/google-fonts"
 
 echo "Installation of google-fonts started"
