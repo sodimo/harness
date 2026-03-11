@@ -7,6 +7,10 @@ dnf -y install 'dnf5-command(config-manager)'
 dnf config-manager setopt keepcache=1
 trap 'dnf config-manager setopt keepcache=0' EXIT
 
+# Install custom repo files before installing packages from them
+cp /ctx/system_files/etc/yum.repos.d/tailscale.repo /etc/yum.repos.d/
+cp /ctx/system_files/etc/yum.repos.d/antigravity.repo /etc/yum.repos.d/
+
 # Networking
 dnf -y install \
   -x PackageKit* \
@@ -146,7 +150,6 @@ dnf -y install \
   bolt \
   flatpak \
   fpaste \
-  fwupd \
   fzf \
   gcr \
   git-core \
@@ -154,7 +157,6 @@ dnf -y install \
   just \
   khal \
   libratbag-ratbagd \
-  man-db \
   man-pages \
   plymouth \
   plymouth-system-theme \
@@ -166,7 +168,6 @@ dnf -y install \
   tuned-ppd \
   tuned-switcher \
   tuned-utils \
-  unzip \
   usb_modeswitch \
   uxplay \
   zram-generator-defaults
