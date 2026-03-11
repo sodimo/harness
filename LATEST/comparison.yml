@@ -1,0 +1,406 @@
+# ============================================================
+# FINAL CONSOLIDATED PACKAGE LIST
+# Zirconium base + Blueprint carryover + additional discoveries
+# ============================================================
+
+
+# ============================================================
+# REMOVE FROM BASE IMAGE
+# ============================================================
+# - firefox
+# - firefox-langpacks
+# - virtualbox-guest-additions
+# - nvtop
+# - sway
+# - yggdrasil
+# - adcli
+# - libdnf-plugin-subscription-manager
+# - python3-subscription-manager-rhsm
+# - subscription-manager
+# - subscription-manager-rhsm-certificates
+# NOTE: toolbox is NOT removed (kept as fallback)
+
+
+# ============================================================
+# DNF PACKAGES — standard repos
+# ============================================================
+
+# --- Desktop Apps ---
+- gnome-disk-utility
+- gnome-keyring
+- imv
+- kitty
+- kitty-terminfo
+- nautilus
+- udiskie
+- vlc
+- xarchiver
+- zathura
+- zathura-pdf-poppler
+
+# --- Wayland Environment ---
+- brightnessctl
+# - light                          # redundant with brightnessctl
+- kanshi
+- playerctl
+- webp-pixbuf-loader
+- wl-clipboard
+- wtype
+
+# --- Sway/wlroots Legacy (commented out, kept for reference) ---
+# - azote
+# - grim
+# - mako
+# - rofi-wayland
+# - rofimoji
+# - slurp
+# - swappy
+# - waybar
+# - wf-recorder
+# - wlr-randr
+# - wshowkeys
+# - xorg-x11-server-Xwayland
+# - xdg-desktop-portal-wlr
+# - xdg-desktop-portal
+
+# --- Niri Core (adopted from zirconium) ---
+- foot                           # wayland-native terminal, niri default
+- xdg-desktop-portal-gnome       # niri uses GNOME portal (replaces xdg-desktop-portal-wlr)
+- xdg-terminal-exec              # standardized terminal launcher
+- xwayland-satellite             # XWayland for niri (replaces xorg-x11-server-Xwayland)
+
+# --- Login Manager (replaces sddm) ---
+- greetd
+- greetd-selinux
+
+# --- Qt/KDE Theming (for Qt app consistency under niri) ---
+# installed with --setopt=install_weak_deps=False
+- kf6-kimageformats
+- kf6-kirigami
+- kf6-qqc2-desktop-style
+- plasma-breeze
+- qt6ct
+- qt6-qtmultimedia
+
+# --- Polkit ---
+- polkit
+
+# --- Multimedia Codecs (negativo17/fedora-multimedia repo) ---
+- ffmpeg
+- ffmpegthumbnailer              # nautilus video thumbnails
+- gstreamer1-plugins-bad-free
+- gstreamer1-plugins-bad-free-libs
+- gstreamer1-plugins-base
+- gstreamer1-plugins-good
+- lame
+- lame-libs
+- libavcodec
+- libjxl                         # JPEG XL support
+- "@multimedia"                  # package group
+
+# --- Desktop Apps/Utilities (adopted from zirconium) ---
+- cava                           # terminal audio visualizer
+- chezmoi                        # dotfile manager
+- ddcutil                        # DDC monitor brightness/settings
+- fastfetch
+- glycin-thumbnailer             # image thumbnailer for GNOME apps
+- input-remapper                 # remap keyboard/mouse/gamepad
+- nautilus-python                # python extensions for nautilus
+- orca                           # screen reader / accessibility
+- wl-mirror                      # wayland screen mirroring
+
+# --- Camera Support ---
+- libcamera
+- libcamera-gstreamer
+- libcamera-tools
+- libcamera-v4l2
+
+# --- Media Hardware ---
+- alsa-sof-firmware
+- bluez                          # bluetoothctl
+- bluez-tools                    # bt-adapter, bt-device CLI
+- gvfs
+- gvfs-mtp
+- pamixer                        # CLI audio mixer
+- pipewire
+- pipewire-alsa
+- pipewire-jack-audio-connection-kit
+- pipewire-pulseaudio
+- wireplumber
+
+# --- Networking ---
+- NetworkManager
+- NetworkManager-adsl
+- NetworkManager-bluetooth       # bluetooth tethering
+- NetworkManager-config-connectivity-fedora
+- NetworkManager-libnm
+- NetworkManager-openconnect
+- NetworkManager-openvpn
+- NetworkManager-strongswan
+- NetworkManager-ssh
+- NetworkManager-ssh-selinux
+- NetworkManager-tui
+- NetworkManager-vpnc
+- NetworkManager-wifi
+- NetworkManager-wwan
+- mobile-broadband-provider-info
+- openconnect
+- tailscale
+- vpnc
+- whois
+- wireguard-tools
+
+# --- Networking (blueprint extras) ---
+- caddy
+- cockpit
+- cockpit-machines
+- cockpit-networkmanager
+- cockpit-podman
+- cockpit-selinux
+- cockpit-storaged
+- cockpit-system
+- pcp-zeroconf
+- systemd-resolved
+
+# --- Security & Auth ---
+- audispd-plugins
+- audit
+- firewalld
+- fprintd
+- fprintd-pam
+- gnome-keyring-pam              # PAM auto-unlock for gnome-keyring
+- gnupg2-scdaemon                # smartcard daemon for GPG
+- openssh-askpass
+- pam_yubico
+- pcsc-lite                      # smartcard reader
+- ykman                          # YubiKey manager CLI
+
+# --- Firmware ---
+- alsa-firmware
+- alsa-tools-firmware
+- atheros-firmware
+- brcmfmac-firmware
+- intel-audio-firmware
+- iwlegacy-firmware
+- iwlwifi-dvm-firmware
+- iwlwifi-mvm-firmware
+- kernel-modules-extra
+- mt7xxx-firmware
+- nxpwireless-firmware
+- realtek-firmware
+- tiwilink-firmware
+
+# --- Printing ---
+- cups
+- cups-pk-helper
+- dymo-cups-drivers
+- hplip
+- printer-driver-brlaser
+- ptouch-driver
+- system-config-printer-libs
+- system-config-printer-udev
+
+# --- Filesystem / Storage / iOS ---
+- cifs-utils                     # SMB/CIFS
+- fuse
+- fuse-common
+- gvfs-archive
+- gvfs-nfs
+- gvfs-smb
+- ifuse                          # iOS filesystem
+- jmtpfs                         # MTP filesystem
+- libimobiledevice
+- libimobiledevice-utils
+
+# --- Virtualization / Guest Agents ---
+- hyperv-daemons
+- open-vm-tools
+- open-vm-tools-desktop
+- qemu-guest-agent
+- spice-vdagent
+- systemd-container              # systemd-nspawn
+
+# --- Input Methods ---
+- fcitx5-mozc                    # Japanese input
+- ibus
+
+# --- Fonts ---
+- default-fonts
+- default-fonts-core-emoji
+- fontawesome-fonts-all
+- glibc-all-langpacks
+- gnome-icon-theme
+- gnome-themes-extra
+- google-noto-color-emoji-fonts
+- google-noto-emoji-fonts
+- google-noto-fonts-common
+- google-noto-sans-fonts
+- google-roboto-fonts
+- overpass-fonts
+- overpass-mono-fonts
+
+# --- GPU / Graphics ---
+- linux-firmware
+- mesa-dri-drivers
+- mesa-libGLU
+- mesa-vulkan-drivers
+- vulkan-tools
+- vulkan-validation-layers
+
+# --- System Portals ---
+- dbus-daemon
+- dbus-tools
+- gsettings-desktop-schemas
+- xdg-desktop-portal-gtk
+- xdg-user-dirs
+
+# --- System Core ---
+- acpi
+- age
+- antigravity
+- aria2
+- bolt
+- dnf5-command(config-manager)
+- flatpak
+- fpaste
+- fwupd                          # firmware updates daemon
+- fzf
+- gcr                            # GNOME crypto / SSH agent
+- git-core
+- gum                            # TUI scripting tool
+- just                           # command runner
+- khal                           # terminal calendar
+- libratbag-ratbagd              # gaming mouse config
+- man-db
+- man-pages
+- plymouth
+- plymouth-system-theme
+- rsync
+- steam-devices
+- switcheroo-control             # GPU switching
+- systemd-oomd-defaults
+- tuned
+- tuned-ppd
+- tuned-switcher
+- tuned-utils
+- unzip
+- usb_modeswitch
+- uxplay                         # AirPlay receiver
+- zram-generator-defaults
+
+# --- System Core (blueprint extras) ---
+- sox
+- unrar-free
+- wmctrl
+- ydotool
+- yt-dlp
+
+# --- Developer Tools ---
+- cmake
+- cpio
+- dbus-x11
+- direnv
+- fish
+- g++
+- gcc
+- gcc-c++
+- gh
+- git-credential-libsecret
+- git-lfs
+- libadwaita
+- make
+- meson
+- neovim
+- p7zip
+- pandoc
+- pipx
+- python3-cairo
+- python3-pip
+- ripgrep
+- uv
+- yq
+- zoxide
+
+# --- Podman Tooling ---
+- podman-compose
+- podman-tui
+- podmansh
+
+# --- Local AI ---
+- ollama
+- ramalama
+- whisper-cpp
+
+# --- ax-shell Python Stack ---
+- python3-gobject
+- python3-ijson
+- python3-numpy
+- python3-pillow
+- python3-psutil
+- python3-pywayland
+- python3-ramalama
+- python3-requests
+- python3-setproctitle
+- python3-toml
+- python3-watchdog
+- tesseract
+
+# --- Benchmarking ---
+- radeontop
+# - glmark2
+# - kmscube
+# - mesa-demos
+# - weston
+
+
+# ============================================================
+# COPR PACKAGES
+# ============================================================
+
+# --- COPR: yalter/niri-git ---
+- niri
+
+# --- COPR: zirconium/packages ---
+- iio-niri                       # IIO sensor integration (convertible/tablet auto-rotate)
+- matugen                        # Material You color scheme generator
+- valent-git                     # KDE Connect alternative
+
+# --- COPR: errornointernet/quickshell ---
+- quickshell-git                 # shell/panel/bar
+
+# --- COPR: ublue-os/packages ---
+- uupd                           # system updater
+
+# --- COPR: mecattaf/duoRPM ---
+- bibata-cursor-themes
+- wl-gammarelay-rs
+
+# --- COPR: mecattaf/harnessRPM ---
+# - asr-rs
+- atuin
+# - bibata-cursor-themes
+- cliphist
+- eza
+- lisgd
+- mactahoe-oled
+# - microsandbox
+- nwg-look                       # GTK settings editor for wlroots/niri
+# - pi
+# - shpool
+- starship
+# - wl-gammarelay-rs
+
+# --- COPR: julianve/open-any-terminal ---
+- nautilus-open-any-terminal
+
+
+# ============================================================
+# FLATPAKS (user scope, flathub)
+# ============================================================
+ - com.google.Chrome
+ - it.mijorus.gearlever
+ - com.hunterwittenborn.Celeste
+ - it.mijorus.collector
+ - com.obsproject.Studio
+ - com.obsproject.Studio.Plugin.OBSVkCapture
+ - org.gnome.Lollypop

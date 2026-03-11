@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "notify": true,
+      "scope": "user",
+      "repo": {
+        "url": "https://dl.flathub.org/repo/flathub.flatpakrepo",
+        "name": "flathub",
+        "title": "Flathub"
+      },
+      "install": [
+        "com.google.Chrome",
+        "it.mijorus.gearlever",
+        "com.hunterwittenborn.Celeste",
+        "it.mijorus.collector",
+        "com.obsproject.Studio",
+        "com.obsproject.Studio.Plugin.OBSVkCapture",
+        "org.gnome.Lollypop"
+      ]
+    }
+  ]
+}

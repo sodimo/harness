@@ -44,3 +44,7 @@ podman build -t harness:latest -f Containerfile .
 ## License
 
 Apache 2.0
+
+### Thanks
+
+A lot of inspiration was taken from [zirconium](https://github.com/zirconium-dev/zirconium)

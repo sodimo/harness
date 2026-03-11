@@ -1,10 +1,9 @@
 [Unit]
 Description=Initializes Chezmoi if directory is missing
-ConditionPathExists=!%h/.config/harness/chezmoi
+ConditionPathExists=!%h/.local/share/chezmoi
 
 [Service]
-ExecStart=chezmoi init --apply github.com/mecattaf/dotfiles
-ExecStartPost=touch %h/.config/harness/chezmoi
+ExecStart=/bin/bash -c 'cp -a /usr/share/harness/dotfiles %h/.local/share/chezmoi && chezmoi apply'
 Type=oneshot
 
 [Install]

@@ -2,5 +2,5 @@
 Description=Chezmoi Update
 
 [Service]
-ExecStart=chezmoi apply --no-tty --keep-going
+ExecStart=chezmoi update --no-tty --keep-going
 Type=oneshot

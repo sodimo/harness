@@ -1,6 +1,6 @@
 [Unit]
 Description=Timer for Chezmoi Update
-ConditionPathExists=%h/.config/harness/chezmoi
+ConditionPathExists=%h/.local/share/chezmoi
 
 [Timer]
 OnBootSec=5m

@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Runtime script: manages user-scope flatpaks on boot.
+# Reads config from /usr/share/flatpak-manager/flatpaks.json
+# Removes Fedora repos unless explicitly configured, adds repos, installs flatpaks.
+set -euo pipefail
+
+CONFIG="/usr/share/flatpak-manager/flatpaks.json"
+
+if [[ ! -f "${CONFIG}" ]]; then
+  echo "No flatpak configuration found at ${CONFIG}, skipping."
+  exit 0
+fi
+
+# Check if any user config uses the Fedora registry
+KEEP_FEDORA=$(jq -r '[.configurations[] | select(.scope == "user") | .repo.url] | any(. == "oci+https://registry.fedoraproject.org")' "${CONFIG}")
+
+# Clean up Fedora repos if not needed
+if [[ "${KEEP_FEDORA}" != "true" ]]; then
+  USER_REMOTES=$(flatpak remotes --user --columns=name 2>/dev/null || true)
+
+  if echo "${USER_REMOTES}" | grep -qw "fedora"; then
+    FEDORA_APPS=$(flatpak list --user --app --columns=origin,application 2>/dev/null | awk '$1 == "fedora" {print $2}')
+    if [[ -n "${FEDORA_APPS}" ]]; then
+      echo "${FEDORA_APPS}" | xargs flatpak remove --user --noninteractive || true
+    fi
+
+    FEDORA_RUNTIMES=$(flatpak list --user --runtime --columns=origin,application,arch,branch 2>/dev/null | \
+      awk '$1 == "fedora" {print $2"/"$3"/"$4}')
+    if [[ -n "${FEDORA_RUNTIMES}" ]]; then
+      echo "${FEDORA_RUNTIMES}" | xargs flatpak remove --user --noninteractive || true
+    fi
+
+    flatpak remote-delete --user fedora --force 2>/dev/null || true
+  fi
+
+  if echo "${USER_REMOTES}" | grep -qw "fedora-testing"; then
+    flatpak remote-delete --user fedora-testing --force 2>/dev/null || true
+  fi
+fi
+
+# Process user configurations
+USER_CONFIGS=$(jq -c '.configurations[] | select(.scope == "user")' "${CONFIG}")
+
+if [[ -z "${USER_CONFIGS}" ]]; then
+  echo "No user-scope flatpak configurations found."
+  exit 0
+fi
+
+echo "${USER_CONFIGS}" | while IFS= read -r config; do
+  REPO_NAME=$(echo "${config}" | jq -r '.repo.name')
+  REPO_URL=$(echo "${config}" | jq -r '.repo.url')
+  REPO_TITLE=$(echo "${config}" | jq -r '.repo.title')
+  NOTIFY=$(echo "${config}" | jq -r '.notify')
+  readarray -t INSTALL < <(echo "${config}" | jq -r '.install[]')
+
+  # Add and enable repo
+  flatpak remote-add --user --if-not-exists "${REPO_NAME}" "${REPO_URL}" --title "${REPO_TITLE}"
+  flatpak remote-modify --user --enable "${REPO_NAME}"
+
+  if [[ "${NOTIFY}" == "true" ]]; then
+    notify-send --app-name "Automatic Flatpak Installation Service" \
+      "Starting installation of ${#INSTALL[@]} user flatpak(s) from ${REPO_TITLE}..." 2>/dev/null || true
+  fi
+
+  if [[ ${#INSTALL[@]} -gt 0 ]]; then
+    flatpak install --user --noninteractive "${REPO_NAME}" "${INSTALL[@]}" || true
+  fi
+
+  if [[ "${NOTIFY}" == "true" ]]; then
+    notify-send --app-name "Automatic Flatpak Installation Service" \
+      "Finished installation of ${#INSTALL[@]} user flatpak(s) from ${REPO_TITLE}!" 2>/dev/null || true
+  fi
+done

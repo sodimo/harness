@@ -1,0 +1,7 @@
+{
+  "kargs": [
+    "amd_iommu=off",
+    "ttm.pages_limit=33554432",
+    "ttm.page_pool_size=33554432"
+  ]
+}

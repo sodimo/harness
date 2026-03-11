@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# CLI tool to manage user-scope flatpak configurations installed by the build system.
+set -euo pipefail
+
+CONFIG="/usr/share/flatpak-manager/flatpaks.json"
+LIBEXEC="/usr/libexec/flatpak-manager"
+
+usage() {
+  echo "Manage user Flatpak installation and setup"
+  echo
+  echo "Usage: flatpak-manager <command>"
+  echo
+  echo "Commands:"
+  echo "  show      Print all configured flatpak changes"
+  echo "  apply     Manually run user flatpak setup"
+  echo "  disable   Disable automatic user flatpak setup"
+  echo "  enable    Enable automatic user flatpak setup"
+}
+
+cmd_show() {
+  if [[ ! -f "${CONFIG}" ]]; then
+    echo "No configuration found at ${CONFIG}"
+    exit 1
+  fi
+
+  local count
+  count=$(jq '.configurations | length' "${CONFIG}")
+  echo "Found ${count} configuration(s)"
+  echo
+
+  for i in $(seq 0 $((count - 1))); do
+    local repo_title notify install_count
+    repo_title=$(jq -r ".configurations[${i}].repo.title" "${CONFIG}")
+    repo_url=$(jq -r ".configurations[${i}].repo.url" "${CONFIG}")
+    notify=$(jq -r ".configurations[${i}].notify" "${CONFIG}")
+    install_count=$(jq -r ".configurations[${i}].install | length" "${CONFIG}")
+
+    echo "  ${install_count} user flatpak(s) from ${repo_title} (${repo_url})"
+    if [[ "${notify}" == "true" ]]; then
+      echo "    Notifications: enabled"
+    else
+      echo "    Notifications: disabled"
+    fi
+    echo "    Flatpaks:"
+    jq -r ".configurations[${i}].install[]" "${CONFIG}" | while read -r pkg; do
+      echo "      ${pkg}"
+    done
+    echo
+  done
+}
+
+cmd_apply() {
+  "${LIBEXEC}/user-flatpak-setup"
+}
+
+cmd_disable() {
+  systemctl --user disable --now user-flatpak-setup.timer
+  echo "Disabled user flatpak timer"
+}
+
+cmd_enable() {
+  systemctl --user enable --now user-flatpak-setup.timer
+  echo "Enabled user flatpak timer"
+}
+
+case "${1:-}" in
+  show)    cmd_show ;;
+  apply)   cmd_apply ;;
+  disable) cmd_disable ;;
+  enable)  cmd_enable ;;
+  *)       usage ;;
+esac

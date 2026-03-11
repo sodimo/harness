@@ -204,6 +204,9 @@ dnf -y install \
 # Benchmarking
 dnf -y install radeontop
 
+# Clone dotfiles into image for offline chezmoi apply
+git clone https://github.com/mecattaf/dotfiles.git /usr/share/harness/dotfiles
+
 # Run font pipeline
 bash /ctx/build_files/fonts/install-fonts.sh
 
