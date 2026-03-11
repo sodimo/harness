@@ -8,8 +8,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FONTS_JSON="$(cat "${SCRIPT_DIR}/fonts.json")"
 
 for SOURCE in "${SCRIPT_DIR}"/sources/*.sh; do
-    chmod +x "${SOURCE}"
-
     FILENAME=$(basename -- "${SOURCE}")
     ARRAY_NAME="${FILENAME%.*}"
 
