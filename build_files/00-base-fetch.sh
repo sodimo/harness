@@ -185,8 +185,3 @@ dnf -y install \
 dnf -y install \
   google-cloud-cli \
   libxcrypt-compat
-
-# uupd from COPR
-dnf -y copr enable ublue-os/packages
-dnf -y copr disable ublue-os/packages
-dnf -y --enablerepo copr:copr.fedorainfracloud.org:ublue-os:packages install uupd
