@@ -28,9 +28,9 @@ jobs:
         uses: osbuild/bootc-image-builder-action@main
         id: build
         with:
-          config: iso.toml
+          config-file: iso.toml
           image: ghcr.io/mecattaf/harness:latest
-          type: anaconda-iso
+          types: anaconda-iso
 
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v5
