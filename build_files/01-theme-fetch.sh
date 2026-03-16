@@ -65,8 +65,6 @@ dnf -y install \
     gnome-disk-utility \
     gnome-keyring \
     imv \
-    kitty \
-    kitty-terminfo \
     nautilus \
     udiskie \
     vlc \
