@@ -14,8 +14,7 @@
         "com.hunterwittenborn.Celeste",
         "it.mijorus.collector",
         "com.obsproject.Studio",
-        "com.obsproject.Studio.Plugin.OBSVkCapture",
-        "org.gnome.Lollypop"
+        "com.obsproject.Studio.Plugin.OBSVkCapture"
       ]
     }
   ]
