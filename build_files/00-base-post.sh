@@ -3,6 +3,8 @@
 set -xeuo pipefail
 
 cp -avf "/ctx/system_files"/. /
+mkdir -p /mnt/nas
+chmod 600 /etc/NetworkManager/system-connections/router-link.nmconnection
 
 sed -i 's|^ExecStart=.*|ExecStart=/usr/bin/bootc update --quiet|' /usr/lib/systemd/system/bootc-fetch-apply-updates.service
 sed -i 's|^OnUnitInactiveSec=.*|OnUnitInactiveSec=7d\nPersistent=true|' /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
@@ -18,3 +20,4 @@ systemctl preset enable-linger.service
 systemctl preset firewalld.service
 systemctl preset systemd-resolved.service
 systemctl preset systemd-timesyncd.service
+systemctl preset mnt-nas.automount

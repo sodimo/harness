@@ -7,5 +7,6 @@ enable firewalld.service
 enable greetd.service
 enable systemd-resolved.service
 enable systemd-timesyncd.service
+enable mnt-nas.automount
 enable tailscaled.service
 enable uupd.timer
