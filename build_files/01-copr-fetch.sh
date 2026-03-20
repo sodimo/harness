@@ -30,6 +30,7 @@ dnf -y --enablerepo copr:copr.fedorainfracloud.org:mecattaf:harnessRPM install \
     asr-rs \
     atuin \
     bibata-cursor-themes \
+    cliamp \
     cliphist \
     eza \
     gws \
