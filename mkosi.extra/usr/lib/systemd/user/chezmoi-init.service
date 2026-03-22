@@ -1,0 +1,12 @@
+[Unit]
+Description=Initializes Chezmoi if directory is missing
+ConditionPathExists=!%h/.config/harness/chezmoi
+
+[Service]
+ExecStart=mkdir -p %h/.config/harness/chezmoi
+ExecStart=touch %h/.config/harness/chezmoi/chezmoi.toml
+ExecStart=chezmoi apply -S /usr/share/harness/dotfiles --config %h/.config/harness/chezmoi/chezmoi.toml
+Type=oneshot
+
+[Install]
+WantedBy=graphical-session-pre.target

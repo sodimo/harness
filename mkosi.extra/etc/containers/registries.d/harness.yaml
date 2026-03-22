@@ -1,0 +1,3 @@
+docker:
+  ghcr.io/mecattaf:
+    use-sigstore-attachments: true

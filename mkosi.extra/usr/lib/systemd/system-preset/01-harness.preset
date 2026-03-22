@@ -1,0 +1,13 @@
+enable auditd.service
+enable bootc-fetch-apply-updates.timer
+enable brew-setup.service
+enable cockpit.socket
+enable enable-linger.service
+enable firewalld.service
+enable flatpak-add-flathub-repos.service
+enable greetd.service
+enable mnt-nas.automount
+enable systemd-resolved.service
+enable systemd-timesyncd.service
+enable tailscaled.service
+enable uupd.timer

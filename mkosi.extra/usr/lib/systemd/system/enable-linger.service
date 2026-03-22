@@ -1,0 +1,12 @@
+[Unit]
+Description=Enable lingering for default user
+After=multi-user.target
+Before=greetd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/enable-linger
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

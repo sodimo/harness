@@ -1,0 +1,73 @@
+#!/bin/bash
+set -xeuo pipefail
+
+install -Dpm0644 -t /usr/share/ "$SRCDIR/cache/homebrew.tar.zst"
+install -Dpm0644 -t /usr/share/flatpak/remotes.d/ "$SRCDIR/cache/flathub.flatpakrepo"
+
+niri --version | grep -i -E "niri [[:digit:]]*\.[[:digit:]]* (.*\.git\..*)"
+
+sed -i 's|^ExecStart=.*|ExecStart=/usr/bin/bootc update --quiet|' /usr/lib/systemd/system/bootc-fetch-apply-updates.service
+
+install -d /usr/share/harness/
+
+# PAM: fix long login times with gnome_keyring.so
+sed --sandbox -i -e '/gnome_keyring.so/ s/-auth/auth/ ; /gnome_keyring.so/ s/-session/session/' /etc/pam.d/greetd
+
+# Shell completions for hjust
+install -d /usr/share/bash-completion/completions /usr/share/zsh/site-functions /usr/share/fish/vendor_completions.d/
+just --completions bash | sed -E 's/([\(_" ])just/\1hjust/g' > /usr/share/bash-completion/completions/hjust
+just --completions zsh | sed -E 's/([\(_" ])just/\1hjust/g' > /usr/share/zsh/site-functions/_hjust
+just --completions fish | sed -E 's/([\(_" ])just/\1hjust/g' > /usr/share/fish/vendor_completions.d/hjust.fish
+
+# Font cache rebuild
+fc-cache --force --really-force --system-only --verbose
+
+# Flatpak pipeline
+if [ -x "$SRCDIR/build_files/flatpak/install-flatpaks.sh" ] ; then
+    bash "$SRCDIR/build_files/flatpak/install-flatpaks.sh"
+fi
+
+# NAS mount point
+install -d /mnt/nas
+
+# Kargs
+install -d /usr/lib/bootc/kargs.d
+cat > /usr/lib/bootc/kargs.d/harness.toml <<'KARGS'
+kargs = ["amd_iommu=off", "ttm.pages_limit=33554432", "ttm.page_pool_size=33554432"]
+KARGS
+
+# Validation: critical files must exist
+grep -F -e "ghcr.io/mecattaf" /etc/containers/policy.json
+grep -F -e "Comment=Central repository of Flatpak applications" /usr/share/flatpak/remotes.d/flathub.flatpakrepo
+stat /usr/share/flatpak/remotes.d/flathub.flatpakrepo
+stat /usr/share/pki/containers/harness.pub
+stat /usr/bin/luks*tpm*
+stat /usr/share/ublue-os/just/update.just
+stat /usr/bin/uupd
+stat /usr/lib/systemd/system/uupd.service
+stat /usr/lib/systemd/system/uupd.timer
+stat /usr/lib/systemd/system/brew-setup.service
+stat /usr/share/homebrew.tar.zst
+stat /usr/lib/tmpfiles.d/homebrew.conf
+
+# Branding
+HOME_URL="https://github.com/mecattaf/harness"
+echo "harness" | tee "/etc/hostname"
+sed -i -f - /usr/lib/os-release <<EOF
+s|^NAME=.*|NAME="Harness"|
+s|^PRETTY_NAME=.*|PRETTY_NAME="Harness"|
+s|^VERSION_CODENAME=.*|VERSION_CODENAME=""|
+s|^VARIANT_ID=.*|VARIANT_ID=""|
+s|^HOME_URL=.*|HOME_URL="${HOME_URL}"|
+s|^BUG_REPORT_URL=.*|BUG_REPORT_URL="${HOME_URL}/issues"|
+s|^SUPPORT_URL=.*|SUPPORT_URL="${HOME_URL}/issues"|
+s|^CPE_NAME=".*"|CPE_NAME="cpe:/o:mecattaf:harness"|
+s|^DOCUMENTATION_URL=.*|DOCUMENTATION_URL="${HOME_URL}"|
+s|^DEFAULT_HOSTNAME=.*|DEFAULT_HOSTNAME="harness"|
+
+/^REDHAT_BUGZILLA_PRODUCT=/d
+/^REDHAT_BUGZILLA_PRODUCT_VERSION=/d
+/^REDHAT_SUPPORT_PRODUCT=/d
+/^REDHAT_SUPPORT_PRODUCT_VERSION=/d
+EOF
+echo "VARIANT_ID=container" >> /usr/lib/os-release

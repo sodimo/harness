@@ -1,0 +1,9 @@
+[submodule "subprojects/ublue-brew"]
+	path = subprojects/ublue-brew
+	url = https://github.com/ublue-os/brew
+[submodule "subprojects/bluefin-common"]
+	path = subprojects/bluefin-common
+	url = https://github.com/projectbluefin/common
+[submodule "subprojects/dotfiles"]
+	path = subprojects/dotfiles
+	url = https://github.com/mecattaf/dotfiles
