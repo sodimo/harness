@@ -19,6 +19,12 @@ if [ ! -e "${SRCDIR}/cache/flathub.flatpakrepo" ] ; then
 	curl --retry 3 -Lo "${SRCDIR}/cache/flathub.flatpakrepo" "https://dl.flathub.org/repo/flathub.flatpakrepo"
 fi
 
+# Download google-cloud-cli RPM (its %post scriptlet fails in mkosi sandbox)
+if [ ! -e "${SRCDIR}/cache/google-cloud-cli.rpm" ] ; then
+	dnf5 download --destdir="${SRCDIR}/cache" --repo=google-cloud-cli google-cloud-cli
+	mv "${SRCDIR}"/cache/google-cloud-cli-*.rpm "${SRCDIR}/cache/google-cloud-cli.rpm"
+fi
+
 # Font pipeline — downloads fonts (requires network access)
 if [ -x "${SRCDIR}/build_files/fonts/install-fonts.sh" ] ; then
 	bash "${SRCDIR}/build_files/fonts/install-fonts.sh"
