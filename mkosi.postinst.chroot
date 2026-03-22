@@ -1,6 +1,10 @@
 #!/bin/bash
 set -xeuo pipefail
 
+# google-cloud-cli's %post scriptlet fails in mkosi sandbox (exit 127),
+# so install it here with --noscripts
+dnf5 -y --setopt=install_weak_deps=False --noscripts install google-cloud-cli
+
 install -Dpm0644 -t /usr/share/ "$SRCDIR/cache/homebrew.tar.zst"
 install -Dpm0644 -t /usr/share/flatpak/remotes.d/ "$SRCDIR/cache/flathub.flatpakrepo"
 
