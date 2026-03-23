@@ -39,13 +39,6 @@ jobs:
         with:
           remove-codeql: true
 
-      - name: Mount BTRFS for podman storage
-        uses: ublue-os/container-storage-action@dc1f4c8f17b672069e921f001132f7cf98a423a6
-        continue-on-error: true
-        with:
-          target-dir: /var/lib/containers
-          mount-opts: compress-force=zstd:2
-
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
