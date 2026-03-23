@@ -19,6 +19,6 @@ metadata_expire=6h
 type=rpm
 gpgcheck=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-terra$releasever-source
-repo_gpgcheck=1
+repo_gpgcheck=0
 enabled=0
 enabled_metadata=0
