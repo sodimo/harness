@@ -7,19 +7,19 @@ Personal Fedora 44 bootc image. AMD-only, amd64-only. Niri compositor with DankM
 ### From an existing Fedora Atomic system
 
 ```bash
-sudo bootc switch --transport registry ghcr.io/mecattaf/harness:latest
+sudo bootc switch --transport registry ghcr.io/sodimo/harness:latest
 ```
 
 Note that we may need to have
 ```
-sudo bootc switch ghcr.io/mecattaf/harness:latest
+sudo bootc switch ghcr.io/sodimo/harness:latest
 systemctl reboot
 ```
 
 
 ### Fresh install via ISO
 
-Download the ISO from [GitHub Actions artifacts](https://github.com/mecattaf/harness/actions/workflows/build-iso.yml) (built monthly).
+Download the ISO from [GitHub Actions artifacts](https://github.com/sodimo/harness/actions/workflows/build-iso.yml) (built monthly).
 
 ## Specs
 

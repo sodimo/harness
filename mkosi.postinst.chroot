@@ -40,7 +40,7 @@ install -d /mnt/nas
 
 # Validation: critical files must exist
 stat /usr/lib/bootc/kargs.d/harness.toml
-grep -F -e "ghcr.io/mecattaf" /etc/containers/policy.json
+grep -F -e "ghcr.io/sodimo" /etc/containers/policy.json
 grep -F -e "Comment=Central repository of Flatpak applications" /usr/share/flatpak/remotes.d/flathub.flatpakrepo
 stat /usr/share/flatpak/remotes.d/flathub.flatpakrepo
 stat /usr/share/pki/containers/harness.pub
@@ -54,7 +54,7 @@ stat /usr/share/homebrew.tar.zst
 stat /usr/lib/tmpfiles.d/homebrew.conf
 
 # Branding
-HOME_URL="https://github.com/mecattaf/harness"
+HOME_URL="https://github.com/sodimo/harness"
 echo "harness" | tee "/etc/hostname"
 sed -i -f - /usr/lib/os-release <<EOF
 s|^NAME=.*|NAME="Harness"|
@@ -64,7 +64,7 @@ s|^VARIANT_ID=.*|VARIANT_ID=""|
 s|^HOME_URL=.*|HOME_URL="${HOME_URL}"|
 s|^BUG_REPORT_URL=.*|BUG_REPORT_URL="${HOME_URL}/issues"|
 s|^SUPPORT_URL=.*|SUPPORT_URL="${HOME_URL}/issues"|
-s|^CPE_NAME=".*"|CPE_NAME="cpe:/o:mecattaf:harness"|
+s|^CPE_NAME=".*"|CPE_NAME="cpe:/o:sodimo:harness"|
 s|^DOCUMENTATION_URL=.*|DOCUMENTATION_URL="${HOME_URL}"|
 s|^DEFAULT_HOSTNAME=.*|DEFAULT_HOSTNAME="harness"|
 

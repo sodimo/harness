@@ -20,7 +20,7 @@
                     "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
                 }
             ],
-            "ghcr.io/mecattaf": [
+            "ghcr.io/sodimo": [
                 {
                     "type": "sigstoreSigned",
                     "keyPaths": [

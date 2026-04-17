@@ -1,7 +1,7 @@
 [customizations.installer.kickstart]
 contents = """
 %post
-bootc switch --mutate-in-place --transport registry ghcr.io/mecattaf/harness:latest
+bootc switch --mutate-in-place --transport registry ghcr.io/sodimo/harness:latest
 %end
 """
 
