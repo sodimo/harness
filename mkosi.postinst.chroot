@@ -31,7 +31,7 @@ just --completions fish | sed -E 's/([\(_" ])just/\1hjust/g' > /usr/share/fish/v
 # mismatch), DNF falls back to GPG verification which fails, aborting the
 # entire ISO build. The repo is already enabled=0, so this only affects
 # metadata pre-fetching — users can still `dnf --enablerepo=terra install`.
-sed -i -e 's/enabled_metadata=1/enabled_metadata=0/' -e '/^gpgkey=file:\/\//d' /etc/yum.repos.d/terra.repo /etc/yum.repos.d/terra-extras.repo
+sed -i -e 's/enabled_metadata=1/enabled_metadata=0/' -e 's/^repo_gpgcheck=1/repo_gpgcheck=0/' -e '/^gpgkey=file:\/\//d' /etc/yum.repos.d/terra.repo /etc/yum.repos.d/terra-extras.repo
 
 fc-cache --force --really-force --system-only --verbose
 
