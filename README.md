@@ -1,6 +1,6 @@
 # Harness
 
-Personal Fedora 44 bootc image. AMD-only, amd64-only. Niri compositor with QuickShellX panel, greetd direct login, kitty terminal, chezmoi dotfiles. Built with raw `podman build` from `quay.io/fedora/fedora-bootc:44`.
+Personal Fedora 44 bootc image. AMD-only, amd64-only. Niri compositor with DankMaterialShell panel, greetd direct login, kitty terminal, chezmoi dotfiles. Built with raw `podman build` from `quay.io/fedora/fedora-bootc:44`.
 
 ## Installation
 
@@ -25,7 +25,7 @@ Download the ISO from [GitHub Actions artifacts](https://github.com/mecattaf/har
 
 - **Base**: Fedora 44 bootc
 - **Compositor**: Niri (git, via COPR)
-- **Panel**: QuickShellX (via COPR mecattaf/harnessRPM)
+- **Panel**: DankMaterialShell (via COPR avengemedia/dms)
 - **Login**: greetd (direct niri-session, no greeter UI)
 - **Terminal**: kitty (primary), foot (kept for niri ecosystem)
 - **Dotfiles**: chezmoi from [github.com/mecattaf/dotfiles](https://github.com/mecattaf/dotfiles)
