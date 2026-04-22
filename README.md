@@ -1,6 +1,8 @@
 # Harness
 
-Personal Fedora 44 bootc image. AMD-only, amd64-only. Niri compositor with DankMaterialShell panel, greetd direct login, kitty terminal, chezmoi dotfiles. Built with raw `podman build` from `quay.io/fedora/fedora-bootc:44`.
+Sodimo Framework Desktop bootc image — Fedora 44, AMD-only (Strix Halo gfx1151), amd64-only. Niri compositor with DankMaterialShell panel, greetd direct login, kitty terminal, chezmoi dotfiles. Built with `mkosi` from `quay.io/fedora/fedora-bootc:44`.
+
+**Scope:** programs and system-scope config only. User-scope quadlets, the mail stack, Caddy sites, OpenWebUI, Vaultwarden, Twenty live in [sodimo/dotfiles](https://github.com/sodimo/dotfiles). See [`docs/scope.md`](docs/scope.md) for the full split (D-014).
 
 ## Installation
 
