@@ -28,7 +28,7 @@ Download the ISO from [GitHub Actions artifacts](https://github.com/sodimo/harne
 - **Panel**: DankMaterialShell (via COPR avengemedia/dms)
 - **Login**: greetd (direct niri-session, no greeter UI)
 - **Terminal**: kitty (primary), foot (kept for niri ecosystem)
-- **Dotfiles**: chezmoi from [github.com/mecattaf/dotfiles](https://github.com/mecattaf/dotfiles)
+- **Dotfiles**: chezmoi from [github.com/sodimo/dotfiles](https://github.com/sodimo/dotfiles), baked into the image as a snapshot at `/usr/share/harness/dotfiles` (static-at-handoff; updates ship via new bootc images, not a daily pull)
 - **Updates**: bootc auto-updates (7-day timer) + uupd
 
 ## Packages

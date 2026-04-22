@@ -6,4 +6,4 @@
 	url = https://github.com/projectbluefin/common
 [submodule "subprojects/dotfiles"]
 	path = subprojects/dotfiles
-	url = https://github.com/mecattaf/dotfiles
+	url = https://github.com/sodimo/dotfiles

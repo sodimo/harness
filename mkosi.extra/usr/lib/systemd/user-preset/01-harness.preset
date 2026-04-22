@@ -1,5 +1,4 @@
 enable chezmoi-init.service
-enable chezmoi-update.timer
 enable fcitx5.service
 enable gnome-keyring-daemon.service
 enable gnome-keyring-daemon.socket

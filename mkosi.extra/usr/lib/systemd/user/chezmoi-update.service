@@ -1,8 +1,0 @@
-[Unit]
-Description=Chezmoi Update
-Requires=network-online.target
-After=network-online.target
-
-[Service]
-ExecStart=/bin/bash -c 'cd %h/.local/share/chezmoi && git remote get-url origin >/dev/null 2>&1 || chezmoi init mecattaf/dotfiles && chezmoi update --no-tty --keep-going'
-Type=oneshot
