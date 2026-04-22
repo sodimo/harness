@@ -30,6 +30,7 @@ Download the ISO from [GitHub Actions artifacts](https://github.com/sodimo/harne
 - **Terminal**: kitty (primary), foot (kept for niri ecosystem)
 - **Dotfiles**: chezmoi from [github.com/sodimo/dotfiles](https://github.com/sodimo/dotfiles), baked into the image as a snapshot at `/usr/share/harness/dotfiles` (static-at-handoff; updates ship via new bootc images, not a daily pull)
 - **Updates**: bootc auto-updates (7-day timer) + uupd
+- **cloudflared**: pinned to `2026.3.0-1` from the Cloudflare stable RPM repo — bump in a dated commit after monthly review (sodimo/harness#6, D-167)
 
 ## Packages
 
