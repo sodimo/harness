@@ -1,1 +1,6 @@
-kargs = ["amd_iommu=off", "ttm.pages_limit=33554432", "ttm.page_pool_size=33554432"]
+# Strix Halo (gfx1151) unified-LPDDR5X tuning per kyuz0/amd-strix-halo-toolboxes.
+# iommu=pt        — IOMMU in pass-through (not disabled) so amdgpu can reach the full pool.
+# amdgpu.gttsize  — hand ~124 GiB of GTT to the iGPU (value in MiB: 126976 = 124*1024).
+# ttm.pages_limit — total TTM pages cap (4 KiB pages): 32505856 * 4 KiB ≈ 124 GiB.
+# Cross-ref: sodimo/harness#11, sodimo/dotfiles docs/kyuz0-toolbox.md.
+kargs = ["iommu=pt", "amdgpu.gttsize=126976", "ttm.pages_limit=32505856"]
