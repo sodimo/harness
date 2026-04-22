@@ -1,0 +1,11 @@
+[Unit]
+Description=Sodimo system-scope services (tailscaled, cloudflared, cockpit)
+Documentation=https://github.com/sodimo/harness/issues/7
+# Mirror the user-scope sodimo.target shipped by sodimo/dotfiles.
+# System-scope units that make up the Sodimo harness surface hook here so
+# `systemctl start sodimo-system.target` brings them all up as a group.
+After=network-online.target
+Wants=network-online.target
+
+[Install]
+WantedBy=multi-user.target

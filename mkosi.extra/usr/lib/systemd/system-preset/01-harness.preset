@@ -8,6 +8,7 @@ enable flatpak-add-flathub-repos.service
 enable flatpak-preinstall.service
 enable greetd.service
 enable mnt-nas.automount
+enable sodimo-system.target
 enable systemd-resolved.service
 enable systemd-timesyncd.service
 enable tailscaled.service
