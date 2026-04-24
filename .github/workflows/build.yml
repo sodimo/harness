@@ -58,8 +58,9 @@ jobs:
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: mkosi.cache
-          key: ${{ runner.os }}-mkosi-${{ env.IMAGE_NAME }}-amd64
+          key: ${{ runner.os }}-mkosi-${{ env.IMAGE_NAME }}-amd64-${{ hashFiles('mkosi.conf', 'mkosi.conf.d/*.conf', 'mkosi.profiles/**/*.conf', 'repos/*.repo') }}
           restore-keys: |
+            ${{ runner.os }}-mkosi-${{ env.IMAGE_NAME }}-amd64-
             ${{ runner.os }}-mkosi-${{ env.IMAGE_NAME }}-amd64
 
       - name: Install mkosi
@@ -79,10 +80,12 @@ jobs:
           sudo env IMAGE_FULL="localhost/${IMAGE_NAME}:${DEFAULT_TAG}" mkosi -B -ff --debug --profile=bootc-ostree
 
       - name: Load image
+        if: github.event_name != 'pull_request'
         run: |
           sudo env IMAGE_FULL="localhost/${IMAGE_NAME}:${DEFAULT_TAG}" $(which just) load
 
       - name: Lint image
+        if: github.event_name != 'pull_request'
         run: |
           sudo env IMAGE_FULL="localhost/${IMAGE_NAME}:${DEFAULT_TAG}" $(which just) lint
 
@@ -91,12 +94,14 @@ jobs:
         run: echo "date=$(date -u +%Y%m%d)" | tee "${GITHUB_OUTPUT}"
 
       - name: Free disk space for rechunk
+        if: github.event_name != 'pull_request'
         run: |
           sudo rm -rf mkosi.output
           sudo rm -rf /tmp/mkosi-*
           df -h /
 
       - name: Run Rechunker
+        if: github.event_name != 'pull_request'
         id: rechunk
         uses: ublue-os/legacy-rechunk@a925083d9af7cb04b3e2a6e8c01bfa495f38b710 # v1.0.0
         with:
