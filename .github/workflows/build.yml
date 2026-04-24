@@ -92,7 +92,7 @@ jobs:
 
       - name: Free disk space for rechunk
         run: |
-          sudo rm -rf mkosi.profiles/bootc-ostree/mkosi.output
+          sudo rm -rf mkosi.output
           sudo rm -rf /tmp/mkosi-*
           df -h /
 
