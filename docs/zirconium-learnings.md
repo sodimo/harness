@@ -18,6 +18,15 @@
 
 ## 1. Already applied autonomously (pre-consolidation)
 
+### D-00a — Emergency: commented out `sunshine` + `moonlight-qt` in `mkosi.conf.d/terra.conf`
+- **What:** the two packages are commented out with a TODO block. This is a non-zirconium fix — commit `d510e22` added them to `terra.conf` assuming they lived in terra44; they don't. They're in the `lizardbyte/beta` COPR. That single bad assumption has been the primary cause of CI red since 2026-04-22 (all the terra metalink / submodule failures we hit were downstream side-effects of this same step failing).
+- **Why:** without this the `Build image` step fails at `dnf5 ... install sunshine` with `No match for argument: sunshine`. Getting CI green today is P0.
+- **Revert:** re-enable both package lines (CI will break again unless LizardByte COPR is wired in). To wire LizardByte properly:
+  1. Add `repos/lizardbyte-beta.repo` pointing at `https://copr.fedorainfracloud.org/coprs/lizardbyte/beta/repo/fedora-$releasever/`.
+  2. Add `mkosi.conf.d/lizardbyte.conf` with `[Build] SandboxTrees=...` and `[Distribution] Repositories=copr:...:lizardbyte:beta`.
+  3. Uncomment the two package lines here.
+- **Status:** Applied in commit `33736b6`.
+
 ### D-00 — Flipped `sodimo/dotfiles` from private to public
 - **What:** `gh api -X PATCH repos/sodimo/dotfiles -F private=false`
 - **Why:** CI run #24903824501 failed at `git submodule update --init` because the workflow's GITHUB_TOKEN has no cross-repo read on private `sodimo/dotfiles`. You approved the flip in chat.
