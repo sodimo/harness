@@ -12,6 +12,7 @@ chmod u-s /usr/bin/newuidmap
 chmod u-s /usr/bin/newgidmap
 
 # we need this to get modules apparently
+printf "\n%s\n" "store-root=/etc/selinux" | tee -a /etc/selinux/semanage.conf
 cp -r "/var/lib/selinux/targeted/active" "/etc/selinux/targeted/"
 cp -r "/var/lib/selinux/final" "/etc/selinux/"
 
