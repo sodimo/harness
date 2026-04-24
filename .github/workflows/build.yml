@@ -70,9 +70,13 @@ jobs:
           sudo mv mkosi /usr/src/mkosi
           sudo ln -sf "/usr/src/mkosi/bin/mkosi" /usr/bin/mkosi
 
+      - name: Render mkosi config (debug)
+        run: sudo mkosi cat-config --debug
+
       - name: Build image
         run: |
-          sudo env IMAGE_FULL="localhost/${IMAGE_NAME}:${DEFAULT_TAG}" mkosi -B -ff
+          set -e
+          sudo env IMAGE_FULL="localhost/${IMAGE_NAME}:${DEFAULT_TAG}" mkosi -B -ff --debug --profile=bootc-ostree
 
       - name: Load image
         run: |
