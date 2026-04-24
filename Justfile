@@ -1,5 +1,5 @@
 image := env("IMAGE_FULL", "localhost/harness:latest")
-filesystem := env("BUILD_FILESYSTEM", "ext4")
+filesystem := env("BUILD_FILESYSTEM", "btrfs")
 
 default:
     #!/usr/bin/env bash
